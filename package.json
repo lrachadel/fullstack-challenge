@@ -1,5 +1,5 @@
 {
-  "name": "fullstack-challeng",
+  "name": "fullstack-challenge",
   "private": true,
   "scripts": {
     "build": "turbo run build",

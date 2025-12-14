@@ -9,8 +9,9 @@ import * as path from 'path';
 
 @Injectable()
 export class EmployeeService {
-
-  constructor(@InjectRepository(Employee) private readonly repo: Repository<Employee>) { }
+  constructor(
+    @InjectRepository(Employee) private readonly repo: Repository<Employee>,
+  ) {}
 
   create(createEmployeeDto: CreateEmployeeDto) {
     return this.repo.create(createEmployeeDto);
@@ -36,9 +37,14 @@ export class EmployeeService {
     const initialCount = await this.repo.count();
 
     if (initialCount == 0) {
-      console.log(`Database already has ${initialCount} employees, skipping seed`);    
+      console.log(
+        `Database already has ${initialCount} employees, skipping seed`,
+      );
 
-      const jsonPath = path.join(__dirname, '../../assets/org-chart-people-100.json');
+      const jsonPath = path.join(
+        __dirname,
+        '../../assets/org-chart-people-100.json',
+      );
       const jsonData = fs.readFileSync(jsonPath, 'utf-8');
       const employees = JSON.parse(jsonData);
 
@@ -61,7 +67,10 @@ export class EmployeeService {
       return { message: `Seeded ${employees.length} employees` };
     }
 
-   return { message: "Seeding completed - no employees were seeded (database already populated)" };
+    return {
+      message:
+        'Seeding completed - no employees were seeded (database already populated)',
+    };
   }
 
   count() {
