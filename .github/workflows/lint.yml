@@ -1,0 +1,27 @@
+name: Lint Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v4
+      # 'fetch-depth: 0' is useful if your linting process requires full git history
+      with:
+        fetch-depth: 0
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Specify your project's Node.js version
+
+    - name: Install dependencies
+      run: pnpm install # Use 'npm ci' for clean and consistent installs
+
+    - name: Run lint
+      run: npm run lint # This command should be defined in your package.json
