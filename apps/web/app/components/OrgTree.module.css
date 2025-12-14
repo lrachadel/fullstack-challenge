@@ -1,0 +1,443 @@
+/* Card Container */
+.card {
+  background-color: #FFFFFF;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E0E0E0;
+  font-family: Arial, sans-serif;
+}
+
+/* Card Header */
+.cardHeader {
+  padding: 12px;
+  border-bottom: 1px solid #E0E0E0;
+  background-color: #FAFAFA;
+}
+
+@media (min-width: 640px) {
+  .cardHeader {
+    padding: 20px;
+  }
+}
+
+/* Card Footer */
+.cardFooter {
+  padding: 8px 12px;
+  border-top: 1px solid #E0E0E0;
+  background-color: #FAFAFA;
+  font-size: 0.75rem;
+  color: #757575;
+}
+
+@media (min-width: 640px) {
+  .cardFooter {
+    padding: 12px 20px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Header Title */
+.headerTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+@media (min-width: 640px) {
+  .headerTitle {
+    font-size: 1.25rem;
+  }
+}
+
+/* Header Controls Container */
+.headerControls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .headerControls {
+    gap: 20px;
+  }
+}
+
+/* Header Row */
+.headerRow {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .headerRow {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+}
+
+/* Button Group */
+.buttonGroup {
+  display: flex;
+  gap: 8px;
+}
+
+/* Action Button */
+.actionBtn {
+  padding: 6px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+@media (min-width: 640px) {
+  .actionBtn {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+  }
+}
+
+.actionBtnPrimary {
+  border: 2px solid #EB1700;
+  color: #EB1700;
+  background-color: transparent;
+}
+
+.actionBtnPrimary:hover {
+  background-color: #EB1700;
+  color: #FFFFFF;
+}
+
+.actionBtnSecondary {
+  border: 1px solid #E0E0E0;
+  color: #000000;
+  background-color: transparent;
+}
+
+.actionBtnSecondary:hover {
+  background-color: #F5F5F5;
+}
+
+/* Filter Row */
+.filterRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
+@media (min-width: 640px) {
+  .filterRow {
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+  }
+}
+
+/* Input Field */
+.inputField {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .inputField {
+    padding: 8px 16px;
+    max-width: 300px;
+  }
+}
+
+.inputField:focus {
+  border-color: #EB1700;
+  box-shadow: 0 0 0 2px rgba(235, 23, 0, 0.2);
+}
+
+/* Select Field */
+.selectField {
+  padding: 8px 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+@media (min-width: 640px) {
+  .selectField {
+    padding: 8px 16px;
+  }
+}
+
+.selectField:focus {
+  border-color: #EB1700;
+  box-shadow: 0 0 0 2px rgba(235, 23, 0, 0.2);
+}
+
+/* Tree Content Area */
+.treeContent {
+  padding: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+@media (min-width: 640px) {
+  .treeContent {
+    padding: 16px;
+    max-height: 600px;
+  }
+}
+
+/* Tree Node */
+.treeNode {
+  user-select: none;
+}
+
+.treeNodeContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .treeNodeContent {
+    gap: 12px;
+    padding: 12px 16px;
+  }
+}
+
+.treeNodeContent:hover {
+  background-color: #F5F5F5;
+}
+
+.treeNodeRoot {
+  background-color: rgba(235, 23, 0, 0.05);
+  border-left: 4px solid #EB1700;
+}
+
+.treeNodeChildren {
+  border-left: 2px solid rgba(235, 23, 0, 0.2);
+  margin-left: 16px;
+}
+
+@media (min-width: 640px) {
+  .treeNodeChildren {
+    margin-left: 32px;
+  }
+}
+
+/* Tree Expand Icon */
+.treeExpandIcon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .treeExpandIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.treeExpandIcon svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .treeExpandIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.treeExpandIconExpanded svg {
+  transform: rotate(90deg);
+  color: #EB1700;
+}
+
+.treeExpandIconCollapsed svg {
+  color: #9E9E9E;
+}
+
+.treeLeafDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #BDBDBD;
+}
+
+@media (min-width: 640px) {
+  .treeLeafDot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Avatar */
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #EEEEEE;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 640px) {
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Tree Node Info */
+.treeNodeInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.treeNodeNameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.treeNodeName {
+  font-weight: 600;
+  color: #000000;
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .treeNodeName {
+    font-size: 0.875rem;
+  }
+}
+
+.treeNodeTitle {
+  font-size: 10px;
+  color: #757575;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .treeNodeTitle {
+    font-size: 0.875rem;
+  }
+}
+
+/* Badges */
+.badgeCeo {
+  display: inline-flex;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9999px;
+  background-color: #EB1700;
+  color: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 640px) {
+  .badgeCeo {
+    padding: 2px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+.badgeDepartment {
+  display: none;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 9999px;
+  background-color: #EEEEEE;
+  color: #616161;
+}
+
+@media (min-width: 768px) {
+  .badgeDepartment {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 640px) {
+  .badgeDepartment {
+    padding: 4px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+.badgeCount {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 9999px;
+  background-color: rgba(235, 23, 0, 0.1);
+  color: #EB1700;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .badgeCount {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+}
+
+.badgeCountText {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .badgeCountText {
+    display: inline;
+  }
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 32px;
+  color: #9E9E9E;
+}
+
+/* Text Utilities */
+.textHighlight {
+  font-weight: 600;
+  color: #EB1700;
+}

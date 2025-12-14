@@ -1,0 +1,42 @@
+/* Page Container */
+.pageContainer {
+  width: 100%;
+  padding: 15px;
+  padding-top: 16px;
+  padding-bottom: 32px;
+}
+
+/* Page Header */
+.pageHeader {
+  margin-bottom: 16px;
+}
+
+@media (min-width: 640px) {
+  .pageHeader {
+    margin-bottom: 24px;
+  }
+}
+
+.pageTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #212121;
+}
+
+@media (min-width: 640px) {
+  .pageTitle {
+    font-size: 1.5rem;
+  }
+}
+
+.pageDescription {
+  font-size: 0.875rem;
+  color: #757575;
+  margin-top: 4px;
+}
+
+@media (min-width: 640px) {
+  .pageDescription {
+    font-size: 1rem;
+  }
+}
