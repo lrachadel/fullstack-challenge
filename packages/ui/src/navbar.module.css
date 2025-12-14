@@ -150,3 +150,17 @@
 .navLinkInactive:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+/* Navbar Right Content */
+.navbarRight {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .navbarRight {
+    margin-left: 16px;
+  }
+}

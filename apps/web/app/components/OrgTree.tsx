@@ -2,12 +2,15 @@
 
 import { useState, useMemo } from 'react';
 import { Employee, EmployeeNode } from '../types/employee';
+import { useLanguage } from '../i18n';
 import EmployeePhoto from './EmployeePhoto';
 import EmployeeDetailModal from './EmployeeDetailModal';
+import EmployeeFormModal from './EmployeeFormModal';
 import styles from './OrgTree.module.css';
 
 interface OrgTreeProps {
   employees: Employee[];
+  onRefresh?: () => void;
 }
 
 function buildTree(employees: Employee[]): EmployeeNode[] {
@@ -118,13 +121,38 @@ function TreeNode({ node, level, expandedNodes, toggleNode, onSelectEmployee }: 
   );
 }
 
-export default function OrgTree({ employees }: OrgTreeProps) {
+export default function OrgTree({ employees, onRefresh }: OrgTreeProps) {
+  const { t } = useLanguage();
   const [expandedNodes, setExpandedNodes] = useState<Set<number>>(new Set());
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState<string>('');
   const [typeFilter, setTypeFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
+
+  const handleAddNew = () => {
+    setEditingEmployee(null);
+    setShowForm(true);
+  };
+
+  const handleEdit = (employee: Employee) => {
+    setEditingEmployee(employee);
+    setShowForm(true);
+    setSelectedEmployee(null);
+  };
+
+  const handleFormClose = () => {
+    setShowForm(false);
+    setEditingEmployee(null);
+  };
+
+  const handleFormSave = () => {
+    if (onRefresh) {
+      onRefresh();
+    }
+  };
 
   const departments = [...new Set(employees.map((e) => e.department))].sort();
 
@@ -189,7 +217,7 @@ export default function OrgTree({ employees }: OrgTreeProps) {
         <div className={styles.filterRow}>
           <input
             type="text"
-            placeholder="Buscar..."
+            placeholder={t.common.search}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={styles.inputField}
@@ -199,7 +227,7 @@ export default function OrgTree({ employees }: OrgTreeProps) {
             onChange={(e) => setDepartmentFilter(e.target.value)}
             className={styles.selectField}
           >
-            <option value="">Departamento</option>
+            <option value="">{t.common.department}</option>
             {departments.map((dept) => (
               <option key={dept} value={dept}>
                 {dept}
@@ -211,27 +239,33 @@ export default function OrgTree({ employees }: OrgTreeProps) {
             onChange={(e) => setTypeFilter(e.target.value)}
             className={styles.selectField}
           >
-            <option value="">Tipo</option>
-            <option value="Employee">Funcionário</option>
-            <option value="Partner">Parceiro</option>
+            <option value="">{t.common.type}</option>
+            <option value="Employee">{t.common.employee}</option>
+            <option value="Partner">{t.common.partner}</option>
           </select>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className={styles.selectField}
           >
-            <option value="">Status</option>
-            <option value="Active">Ativo</option>
-            <option value="Inactive">Inativo</option>
+            <option value="">{t.common.status}</option>
+            <option value="Active">{t.common.active}</option>
+            <option value="Inactive">{t.common.inactive}</option>
           </select>
           <div className={styles.buttonGroup}>
             <button onClick={expandAll} className={`${styles.actionBtn} ${styles.actionBtnPrimary}`}>
-              Expandir
+              {t.orgTree.expand}
             </button>
             <button onClick={collapseAll} className={`${styles.actionBtn} ${styles.actionBtnSecondary}`}>
-              Recolher
+              {t.orgTree.collapse}
             </button>
           </div>
+          <button
+            onClick={handleAddNew}
+            className={styles.addButton}
+          >
+            {t.employeeTable.add}
+          </button>
         </div>
       </div>
 
@@ -249,20 +283,31 @@ export default function OrgTree({ employees }: OrgTreeProps) {
           ))
         ) : (
           <div className={styles.emptyState}>
-            {searchTerm ? 'Nenhum funcionário encontrado' : 'Nenhum dado disponível'}
+            {searchTerm ? t.orgTree.noEmployeesFound : t.orgTree.noDataAvailable}
           </div>
         )}
       </div>
 
       <div className={styles.cardFooter}>
-        <span className={styles.textHighlight}>{employees.length}</span> funcionários no total
+        <span className={styles.textHighlight}>{employees.length}</span> {t.common.employees} {t.common.total}
       </div>
 
       <EmployeeDetailModal
         employee={selectedEmployee}
         employees={employees}
         onClose={() => setSelectedEmployee(null)}
+        onEdit={handleEdit}
+        onDeactivate={onRefresh}
       />
+
+      {showForm && (
+        <EmployeeFormModal
+          employee={editingEmployee}
+          employees={employees}
+          onClose={handleFormClose}
+          onSave={handleFormSave}
+        />
+      )}
     </div>
   );
 }

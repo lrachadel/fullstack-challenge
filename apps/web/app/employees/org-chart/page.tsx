@@ -1,19 +1,7 @@
-import OrgTree from '../../components/OrgTree';
-import { employeeService } from '../../services/employeeService';
+import OrgTreeWrapper from '../../components/OrgTreeWrapper';
 import styles from '../page.module.css';
 
-async function getEmployees() {
-  try {
-    return await employeeService.findAll();
-  } catch (error) {
-    console.error('Error fetching employees:', error);
-    return [];
-  }
-}
-
-export default async function OrgChartPage() {
-  const employees = await getEmployees();
-
+export default function OrgChartPage() {
   return (
     <main className={styles.pageContainer}>
       <div className={styles.pageHeader}>
@@ -22,7 +10,7 @@ export default async function OrgChartPage() {
           Visualize a estrutura hierárquica da organização
         </p>
       </div>
-      <OrgTree employees={employees} />
+      <OrgTreeWrapper />
     </main>
   );
 }

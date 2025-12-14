@@ -14,6 +14,7 @@ interface NavbarProps {
   brandSubtitle?: string;
   items: NavItem[];
   renderLink: (item: NavItem, children: ReactNode) => ReactNode;
+  rightContent?: ReactNode;
 }
 
 export const Navbar = ({
@@ -21,6 +22,7 @@ export const Navbar = ({
   brandSubtitle = "Portal de Funcionários",
   items,
   renderLink,
+  rightContent,
 }: NavbarProps) => {
   return (
     <header className={styles.navbar}>
@@ -49,6 +51,12 @@ export const Navbar = ({
               )
             )}
           </nav>
+
+          {rightContent && (
+            <div className={styles.navbarRight}>
+              {rightContent}
+            </div>
+          )}
         </div>
       </div>
     </header>

@@ -1,16 +1,48 @@
 'use client';
 
+import { useState } from 'react';
 import { Employee } from '../types/employee';
+import { useLanguage } from '../i18n';
+import { employeeService } from '../services/employeeService';
 import EmployeePhoto from './EmployeePhoto';
+import ConfirmModal from './ConfirmModal';
 import styles from './EmployeeDetailModal.module.css';
 
 interface EmployeeDetailModalProps {
   employee: Employee | null;
   employees: Employee[];
   onClose: () => void;
+  onEdit?: (employee: Employee) => void;
+  onDeactivate?: () => void;
 }
 
-export default function EmployeeDetailModal({ employee, employees, onClose }: EmployeeDetailModalProps) {
+export default function EmployeeDetailModal({ employee, employees, onClose, onEdit, onDeactivate }: EmployeeDetailModalProps) {
+  const { t, language } = useLanguage();
+  const [isDeactivating, setIsDeactivating] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const handleDeactivateClick = () => {
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmDeactivate = async () => {
+    if (!employee || employee.status === 'Inactive') return;
+    
+    try {
+      setIsDeactivating(true);
+      await employeeService.remove(employee.id);
+      setShowConfirmModal(false);
+      if (onDeactivate) {
+        onDeactivate();
+      }
+      onClose();
+    } catch (error) {
+      console.error('Erro ao desativar funcionário:', error);
+      setShowConfirmModal(false);
+    } finally {
+      setIsDeactivating(false);
+    }
+  };
   if (!employee) return null;
 
   const manager = employee.managerId 
@@ -37,35 +69,55 @@ export default function EmployeeDetailModal({ employee, employees, onClose }: Em
             <p className={styles.jobTitle}>{employee.jobTitle}</p>
             <div className={styles.badges}>
               <span className={employee.status === 'Active' ? styles.badgeActive : styles.badgeInactive}>
-                {employee.status === 'Active' ? 'Ativo' : 'Inativo'}
+                {employee.status === 'Active' ? t.common.active : t.common.inactive}
               </span>
               <span className={styles.badgeType}>
-                {employee.type === 'Employee' ? 'Funcionário' : 'Parceiro'}
+                {employee.type === 'Employee' ? t.common.employee : t.common.partner}
               </span>
             </div>
           </div>
         </div>
 
         <div className={styles.content}>
+          <div className={styles.actionButtons}>
+            {onEdit && (
+              <button 
+                className={styles.editButton}
+                onClick={() => onEdit(employee)}
+              >
+                {t.employeeDetail.editEmployee}
+              </button>
+            )}
+            {onDeactivate && employee.status === 'Active' && (
+              <button 
+                className={styles.deactivateButton}
+                onClick={handleDeactivateClick}
+                disabled={isDeactivating}
+              >
+                {t.employeeDetail.deactivateEmployee}
+              </button>
+            )}
+          </div>
+
           <div className={styles.section}>
-            <h3 className={styles.sectionTitle}>Informações</h3>
+            <h3 className={styles.sectionTitle}>{t.employeeDetail.information}</h3>
             <div className={styles.infoGrid}>
               <div className={styles.infoItem}>
-                <span className={styles.infoLabel}>Departamento</span>
+                <span className={styles.infoLabel}>{t.employeeDetail.department}</span>
                 <span className={styles.infoValue}>{employee.department}</span>
               </div>
               <div className={styles.infoItem}>
-                <span className={styles.infoLabel}>Localização</span>
+                <span className={styles.infoLabel}>{t.employeeDetail.location}</span>
                 <span className={styles.infoValue}>{employee.location}</span>
               </div>
               <div className={styles.infoItem}>
-                <span className={styles.infoLabel}>Email</span>
+                <span className={styles.infoLabel}>{t.employeeDetail.email}</span>
                 <span className={styles.infoValue}>{employee.workEmail}</span>
               </div>
               <div className={styles.infoItem}>
-                <span className={styles.infoLabel}>Data de Contratação</span>
+                <span className={styles.infoLabel}>{t.employeeDetail.hireDate}</span>
                 <span className={styles.infoValue}>
-                  {new Date(employee.hireDate).toLocaleDateString('pt-BR')}
+                  {new Date(employee.hireDate).toLocaleDateString(language === 'pt-BR' ? 'pt-BR' : 'en-US')}
                 </span>
               </div>
             </div>
@@ -73,7 +125,7 @@ export default function EmployeeDetailModal({ employee, employees, onClose }: Em
 
           {manager && (
             <div className={styles.section}>
-              <h3 className={styles.sectionTitle}>Gerente</h3>
+              <h3 className={styles.sectionTitle}>{t.employeeDetail.manager}</h3>
               <div className={styles.personCard}>
                 <div className={styles.personAvatar}>
                   <EmployeePhoto src={manager.photoPath} alt={manager.name} />
@@ -88,7 +140,7 @@ export default function EmployeeDetailModal({ employee, employees, onClose }: Em
 
           <div className={styles.section}>
             <h3 className={styles.sectionTitle}>
-              Subordinados Diretos ({directReports.length})
+              {t.employeeDetail.directReports} ({directReports.length})
             </h3>
             {directReports.length > 0 ? (
               <div className={styles.reportsList}>
@@ -105,11 +157,23 @@ export default function EmployeeDetailModal({ employee, employees, onClose }: Em
                 ))}
               </div>
             ) : (
-              <p className={styles.emptyText}>Nenhum subordinado direto</p>
+              <p className={styles.emptyText}>{t.employeeDetail.noDirectReports}</p>
             )}
           </div>
         </div>
       </div>
+
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        title={t.confirmModal.deactivateTitle}
+        message={t.confirmModal.deactivateMessage.replace('{name}', employee.name)}
+        confirmText={t.confirmModal.deactivate}
+        cancelText={t.common.cancel}
+        variant="danger"
+        isLoading={isDeactivating}
+        onConfirm={handleConfirmDeactivate}
+        onCancel={() => setShowConfirmModal(false)}
+      />
     </div>
   );
 }

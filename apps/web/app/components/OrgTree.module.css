@@ -115,11 +115,30 @@
 .actionBtnSecondary {
   border: 1px solid #E0E0E0;
   color: #000000;
-  background-color: transparent;
+  background-color: #FFFFFF;
 }
 
 .actionBtnSecondary:hover {
-  background-color: #F5F5F5;
+  background-color: #E0E0E0;
+  border-color: #BDBDBD;
+}
+
+/* Add Button */
+.addButton {
+  padding: 8px 16px;
+  border: none;
+  background-color: #EB1700;
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.addButton:hover {
+  background-color: #C91400;
 }
 
 /* Filter Row */

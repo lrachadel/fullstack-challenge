@@ -244,6 +244,53 @@
   overflow-y: auto;
 }
 
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.editButton {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid #EB1700;
+  background-color: transparent;
+  color: #EB1700;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editButton:hover {
+  background-color: #EB1700;
+  color: #FFFFFF;
+}
+
+.deactivateButton {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid #757575;
+  background-color: transparent;
+  color: #757575;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.deactivateButton:hover {
+  background-color: #757575;
+  color: #FFFFFF;
+}
+
+.deactivateButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .emptyText {
   font-size: 0.875rem;
   color: #9E9E9E;

@@ -23,8 +23,8 @@ export const employeeService = {
     return res.json();
   },
 
-  async create(employee: Omit<Employee, 'id'>): Promise<Employee> {
-    const res = await fetch(`${API_BASE_URL}/employee`, {
+  async create(employee: Omit<Employee, 'id' | 'status'>): Promise<Employee> {
+    const res = await fetch(`${API_BASE_URL}/employee/create-employee`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,8 +37,8 @@ export const employeeService = {
     return res.json();
   },
 
-  async update(id: number, employee: Partial<Employee>): Promise<Employee> {
-    const res = await fetch(`${API_BASE_URL}/employee/${id}`, {
+  async update(id: number, employee: Partial<Omit<Employee, 'hireDate' | 'type' | 'status'>>): Promise<Employee> {
+    const res = await fetch(`${API_BASE_URL}/employee/update-employee/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const employeeService = {
   },
 
   async remove(id: number): Promise<void> {
-    const res = await fetch(`${API_BASE_URL}/employee/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/employee/delete-employee/${id}`, {
       method: 'DELETE',
     });
     if (!res.ok) {
