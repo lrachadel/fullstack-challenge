@@ -5,7 +5,7 @@ export class CreateEmployeeDto {
   managerId?: number | null;
   photoPath: string;
   type: 'Employee' | 'Partner';
-  status: 'Active' | 'Inactive';
+  status?: 'Active' | 'Inactive';
   workEmail: string;
   hireDate: string;
   location: string;
