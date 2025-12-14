@@ -19,12 +19,12 @@ export default function OrgTreeWrapper() {
       setEmployees(data);
       setError(null);
     } catch (err) {
-      setError('Erro ao carregar funcionários');
+      setError(t.employeeTable.errorLoading);
       console.error('Error fetching employees:', err);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     fetchEmployees();
