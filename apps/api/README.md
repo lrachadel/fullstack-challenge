@@ -1,98 +1,219 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API - Portal de Funcionários
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[English](#english) | [Português](#português)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Português
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 📋 Sobre
 
-## Project setup
+API RESTful para o Portal de Funcionários da Johnson & Johnson. Desenvolvida com NestJS, TypeORM e PostgreSQL, fornece endpoints para gerenciamento completo de funcionários.
 
-```bash
-$ pnpm install
+### 🔗 URL de Produção
+
+- **API:** [https://jj-employee-api.railway.app](https://jj-employee-api.railway.app)
+- **Swagger:** [https://jj-employee-api.railway.app/api](https://jj-employee-api.railway.app/api)
+
+### 🏗️ Arquitetura
+
+```
+apps/api/
+├── src/
+│   ├── employee/           # Módulo de funcionários
+│   │   ├── dto/            # Data Transfer Objects
+│   │   ├── entities/       # Entidades TypeORM
+│   │   ├── employee.controller.ts
+│   │   ├── employee.service.ts
+│   │   └── employee.module.ts
+│   ├── health/             # Health check endpoint
+│   ├── app.module.ts       # Módulo principal
+│   └── main.ts             # Bootstrap da aplicação
+├── assets/                 # Dados de seed (JSON)
+└── test/                   # Testes E2E
 ```
 
-## Compile and run the project
+### 🚀 Como Executar
+
+#### Pré-requisitos
+- Node.js >= 18
+- pnpm >= 9.0.0
+- PostgreSQL
+
+#### Instalação
 
 ```bash
-# development
-$ pnpm run start
+# A partir da raiz do monorepo
+cd apps/api
 
-# watch mode
-$ pnpm run start:dev
+# Instale as dependências (se não instalou na raiz)
+pnpm install
 
-# production mode
-$ pnpm run start:prod
+# Configure as variáveis de ambiente
+cp .env.example .env
+
+# Execute em modo desenvolvimento
+pnpm dev
 ```
 
-## Run tests
+#### Variáveis de Ambiente
+
+```env
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=postgres
+DATABASE_PASSWORD=sua_senha
+DATABASE_NAME=employees
+NODE_ENV=development
+PORT=3001
+```
+
+### 📡 Endpoints da API
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| GET | `/employees` | Lista todos os funcionários |
+| GET | `/employees/:id` | Busca funcionário por ID |
+| POST | `/employees` | Cria novo funcionário |
+| PATCH | `/employees/:id` | Atualiza funcionário |
+| DELETE | `/employees/:id` | Remove funcionário (soft delete) |
+| GET | `/health` | Health check |
+
+### 🛠️ Tecnologias
+
+| Tecnologia | Versão | Propósito |
+|------------|--------|-----------|
+| **NestJS** | 11.x | Framework Node.js com arquitetura modular |
+| **TypeORM** | 0.3.x | ORM para PostgreSQL |
+| **PostgreSQL** | 15+ | Banco de dados relacional |
+| **Swagger** | 11.x | Documentação automática da API |
+| **class-validator** | 0.14.x | Validação de DTOs |
+| **class-transformer** | 0.5.x | Transformação de objetos |
+
+### 🧪 Testes
 
 ```bash
-# unit tests
-$ pnpm run test
+# Testes unitários
+pnpm test
 
-# e2e tests
-$ pnpm run test:e2e
+# Testes E2E
+pnpm test:e2e
 
-# test coverage
-$ pnpm run test:cov
+# Cobertura de testes
+pnpm test:cov
 ```
 
-## Deployment
+### ⚠️ Limitações
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- Sem autenticação/autorização
+- Sem rate limiting
+- Sem paginação server-side
+- Soft delete apenas (não remove fisicamente)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+---
+
+## English
+
+### 📋 About
+
+RESTful API for the Johnson & Johnson Employee Portal. Built with NestJS, TypeORM, and PostgreSQL, it provides endpoints for complete employee management.
+
+### 🔗 Production URL
+
+- **API:** [https://jj-employee-api.railway.app](https://jj-employee-api.railway.app)
+- **Swagger:** [https://jj-employee-api.railway.app/api](https://jj-employee-api.railway.app/api)
+
+### 🏗️ Architecture
+
+```
+apps/api/
+├── src/
+│   ├── employee/           # Employee module
+│   │   ├── dto/            # Data Transfer Objects
+│   │   ├── entities/       # TypeORM entities
+│   │   ├── employee.controller.ts
+│   │   ├── employee.service.ts
+│   │   └── employee.module.ts
+│   ├── health/             # Health check endpoint
+│   ├── app.module.ts       # Main module
+│   └── main.ts             # Application bootstrap
+├── assets/                 # Seed data (JSON)
+└── test/                   # E2E tests
+```
+
+### 🚀 How to Run
+
+#### Prerequisites
+- Node.js >= 18
+- pnpm >= 9.0.0
+- PostgreSQL
+
+#### Installation
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+# From the monorepo root
+cd apps/api
+
+# Install dependencies (if not installed at root)
+pnpm install
+
+# Configure environment variables
+cp .env.example .env
+
+# Run in development mode
+pnpm dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### Environment Variables
 
-## Resources
+```env
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=postgres
+DATABASE_PASSWORD=your_password
+DATABASE_NAME=employees
+NODE_ENV=development
+PORT=3001
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### 📡 API Endpoints
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/employees` | List all employees |
+| GET | `/employees/:id` | Get employee by ID |
+| POST | `/employees` | Create new employee |
+| PATCH | `/employees/:id` | Update employee |
+| DELETE | `/employees/:id` | Remove employee (soft delete) |
+| GET | `/health` | Health check |
 
-## Support
+### 🛠️ Technologies
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **NestJS** | 11.x | Node.js framework with modular architecture |
+| **TypeORM** | 0.3.x | ORM for PostgreSQL |
+| **PostgreSQL** | 15+ | Relational database |
+| **Swagger** | 11.x | Automatic API documentation |
+| **class-validator** | 0.14.x | DTO validation |
+| **class-transformer** | 0.5.x | Object transformation |
 
-## Stay in touch
+### 🧪 Tests
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Unit tests
+pnpm test
 
-## License
+# E2E tests
+pnpm test:e2e
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Test coverage
+pnpm test:cov
+```
+
+### ⚠️ Limitations
+
+- No authentication/authorization
+- No rate limiting
+- No server-side pagination
+- Soft delete only (no physical removal)
