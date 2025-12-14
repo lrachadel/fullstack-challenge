@@ -1,4 +1,10 @@
+'use client';
+
+import { useLanguage } from '../i18n';
+
 export default function Header() {
+  const { t } = useLanguage();
+  
   return (
     <header className="bg-jj-red text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-4">
@@ -9,7 +15,7 @@ export default function Header() {
             </div>
             <div>
               <h1 className="text-xl font-semibold">Johnson & Johnson</h1>
-              <p className="text-sm text-white/80">Portal de Funcionários</p>
+              <p className="text-sm text-white/80">{t.navbar.title}</p>
             </div>
           </div>
         </div>

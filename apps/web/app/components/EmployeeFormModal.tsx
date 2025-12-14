@@ -117,7 +117,7 @@ export default function EmployeeFormModal({
       onSave();
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao salvar funcionário');
+      setError(err instanceof Error ? err.message : t.employeeForm.errorSaving);
     } finally {
       setIsSubmitting(false);
     }

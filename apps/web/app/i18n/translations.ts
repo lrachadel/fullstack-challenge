@@ -23,6 +23,7 @@ export const translations = {
       title: 'Portal de Funcionários',
       employeeList: 'Lista de Funcionários',
       orgChart: 'Organograma',
+      apiDocs: 'API Docs',
     },
     employeeTable: {
       title: 'Lista de Funcionários',
@@ -107,6 +108,7 @@ export const translations = {
       title: 'Employee Portal',
       employeeList: 'Employee List',
       orgChart: 'Org Chart',
+      apiDocs: 'API Docs',
     },
     employeeTable: {
       title: 'Employee List',

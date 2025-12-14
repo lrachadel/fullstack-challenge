@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,15 +6,39 @@ import { Employee } from './entities/employee.entity';
 import { Repository } from 'typeorm';
 import * as fs from 'fs';
 import * as path from 'path';
+import { EventEmitterService } from '../events/event-emitter.service';
+import { EventType } from '../events/event.types';
 
 @Injectable()
 export class EmployeeService {
   constructor(
     @InjectRepository(Employee) private readonly repo: Repository<Employee>,
+    private readonly eventEmitter: EventEmitterService,
   ) {}
 
-  create(createEmployeeDto: CreateEmployeeDto) {
-    return this.repo.create(createEmployeeDto);
+  async create(createEmployeeDto: CreateEmployeeDto) {
+    if (!createEmployeeDto.name || createEmployeeDto.name.trim() === '') {
+      throw new BadRequestException('O nome é obrigatório');
+    }
+
+    if (!createEmployeeDto.hireDate || createEmployeeDto.hireDate.trim() === '') {
+      throw new BadRequestException('A data de contratação é obrigatória');
+    }
+
+    const employee = this.repo.create({
+      ...createEmployeeDto,
+      status: 'Active',
+    });
+
+    const savedEmployee = await this.repo.save(employee);
+
+    this.eventEmitter.emitEmployeeEvent(EventType.EMPLOYEE_CREATED, {
+      employeeId: savedEmployee.id,
+      employeeName: savedEmployee.name,
+      department: savedEmployee.department,
+    });
+
+    return savedEmployee;
   }
 
   findAll() {
@@ -25,12 +49,50 @@ export class EmployeeService {
     return this.repo.findOneBy({ id });
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return this.repo.update({ id }, updateEmployeeDto);
+  async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    const existingEmployee = await this.repo.findOneBy({ id });
+    
+    if (!existingEmployee) {
+      throw new BadRequestException('Funcionário não encontrado');
+    }
+
+    const changes: Record<string, { old: any; new: any }> = {};
+    for (const [key, value] of Object.entries(updateEmployeeDto)) {
+      if (existingEmployee[key] !== value) {
+        changes[key] = { old: existingEmployee[key], new: value };
+      }
+    }
+
+    await this.repo.update({ id }, updateEmployeeDto);
+
+    const updatedEmployee = await this.repo.findOneBy({ id });
+
+    this.eventEmitter.emitEmployeeEvent(EventType.EMPLOYEE_UPDATED, {
+      employeeId: id,
+      employeeName: updatedEmployee?.name || existingEmployee.name,
+      department: updatedEmployee?.department || existingEmployee.department,
+      changes,
+    });
+
+    return { affected: 1 };
   }
 
-  remove(id: number) {
-    return this.repo.delete(id);
+  async remove(id: number) {
+    const employee = await this.repo.findOneBy({ id });
+    
+    if (!employee) {
+      throw new BadRequestException('Funcionário não encontrado');
+    }
+
+    await this.repo.update({ id }, { status: 'Inactive' });
+
+    this.eventEmitter.emitEmployeeEvent(EventType.EMPLOYEE_DEACTIVATED, {
+      employeeId: id,
+      employeeName: employee.name,
+      department: employee.department,
+    });
+
+    return { affected: 1 };
   }
 
   async seed() {
