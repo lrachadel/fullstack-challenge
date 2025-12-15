@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import styles from "./navbar.module.css";
+import styles from "./Navbar.module.css";
 
 interface NavItem {
   label: string;

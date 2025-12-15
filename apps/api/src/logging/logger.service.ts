@@ -13,7 +13,13 @@ export interface LogEntry {
 
 @Injectable()
 export class CustomLoggerService implements LoggerService {
-  private readonly logLevels: LogLevel[] = ['error', 'warn', 'log', 'debug', 'verbose'];
+  private readonly logLevels: LogLevel[] = [
+    'error',
+    'warn',
+    'log',
+    'debug',
+    'verbose',
+  ];
   private readonly currentLogLevel: LogLevel;
   private readonly logToFile: boolean;
   private readonly logFilePath: string;
@@ -21,7 +27,8 @@ export class CustomLoggerService implements LoggerService {
   constructor() {
     this.currentLogLevel = (process.env.LOG_LEVEL as LogLevel) || 'log';
     this.logToFile = process.env.LOG_TO_FILE === 'true';
-    this.logFilePath = process.env.LOG_FILE_PATH || path.join(process.cwd(), 'logs');
+    this.logFilePath =
+      process.env.LOG_FILE_PATH || path.join(process.cwd(), 'logs');
 
     if (this.logToFile) {
       this.ensureLogDirectory();
@@ -85,7 +92,13 @@ export class CustomLoggerService implements LoggerService {
 
   error(message: any, trace?: string, context?: string): void {
     if (this.shouldLog('error')) {
-      const entry = this.formatLogEntry('error', message, context, undefined, trace);
+      const entry = this.formatLogEntry(
+        'error',
+        message,
+        context,
+        undefined,
+        trace,
+      );
       this.writeLog(entry);
     }
   }
@@ -161,7 +174,11 @@ export class CustomLoggerService implements LoggerService {
   }
 
   // Error tracking
-  logError(error: Error, context?: string, additionalData?: Record<string, any>): void {
+  logError(
+    error: Error,
+    context?: string,
+    additionalData?: Record<string, any>,
+  ): void {
     const entry = this.formatLogEntry(
       'error',
       error.message,

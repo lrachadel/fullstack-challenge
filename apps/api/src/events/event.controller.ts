@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { EventLogService } from './event-log.service';
 import { EventType } from './event.types';
 
@@ -35,7 +29,7 @@ export class EventController {
   }
 
   @Get('types')
-  async getEventTypes() {
+  getEventTypes() {
     return Object.values(EventType);
   }
 

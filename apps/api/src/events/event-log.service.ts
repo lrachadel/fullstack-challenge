@@ -85,12 +85,17 @@ export class EventLogService {
   }> {
     const total = await this.eventLogRepository.count();
 
+    interface EventTypeCount {
+      eventType: string;
+      count: string;
+    }
+
     const byTypeResult = await this.eventLogRepository
       .createQueryBuilder('event')
       .select('event.eventType', 'eventType')
       .addSelect('COUNT(*)', 'count')
       .groupBy('event.eventType')
-      .getRawMany();
+      .getRawMany<EventTypeCount>();
 
     const byType: Record<string, number> = {};
     byTypeResult.forEach((row) => {

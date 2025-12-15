@@ -12,6 +12,16 @@
   padding: 16px;
 }
 
+.error {
+  padding: 12px 16px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
 .modal {
   background-color: #FFFFFF;
   border-radius: 12px;

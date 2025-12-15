@@ -1,15 +1,17 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Navbar } from '@repo/ui/navbar';
+import { Navbar } from './ui';
 import { useLanguage } from '../i18n';
-import LanguageSelector from './LanguageSelector';
+import { useAuth } from '../auth';
 import styles from './AppNavbar.module.css';
 
 export default function AppNavbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useLanguage();
+  const { isAuthenticated, user, logout } = useAuth();
 
   const navItems = [
     {
@@ -26,6 +28,15 @@ export default function AppNavbar() {
 
   const handleOpenSwagger = () => {
     window.open('http://localhost:3002/api/docs', '_blank');
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
+  };
+
+  const handleLogin = () => {
+    router.push('/login');
   };
 
   return (
@@ -48,7 +59,28 @@ export default function AppNavbar() {
             </svg>
             {t.navbar.apiDocs}
           </button>
-          <LanguageSelector />
+          {isAuthenticated ? (
+            <div className={styles.authSection}>
+              <span className={styles.username}>{user?.username}</span>
+              <button className={styles.authButton} onClick={handleLogout}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                {t.auth.logout}
+              </button>
+            </div>
+          ) : (
+            <button className={styles.authButton} onClick={handleLogin}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+              </svg>
+              {t.auth.login}
+            </button>
+          )}
         </div>
       }
     />

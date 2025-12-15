@@ -52,7 +52,7 @@ function TreeNode({ node, level, expandedNodes, toggleNode, onSelectEmployee }: 
   const paddingLeft = `${level * 16 + 8}px`;
 
   const handleClick = (e: React.MouseEvent) => {
-    if (hasChildren) {
+    if (e && hasChildren) {
       toggleNode(node.id);
     }
   };

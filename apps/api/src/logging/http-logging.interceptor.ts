@@ -39,12 +39,12 @@ export class HttpLoggingInterceptor implements NestInterceptor {
             requestId,
           });
         },
-        error: (error) => {
+        error: (error: { status?: number }) => {
           const duration = Date.now() - startTime;
           this.logger.logHttpRequest({
             method: request.method,
             url: request.originalUrl || request.url,
-            statusCode: error.status || 500,
+            statusCode: error.status ?? 500,
             duration,
             userAgent: request.get('user-agent'),
             ip: request.ip || request.socket?.remoteAddress,

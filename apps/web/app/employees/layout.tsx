@@ -1,4 +1,7 @@
+'use client';
+
 import AppNavbar from '../components/AppNavbar';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 export default function EmployeesLayout({
   children,
@@ -6,9 +9,11 @@ export default function EmployeesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <AppNavbar />
-      {children}
-    </div>
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-50">
+        <AppNavbar />
+        {children}
+      </div>
+    </ProtectedRoute>
   );
 }

@@ -1,6 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import * as dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
@@ -38,12 +39,46 @@ class ConfigService {
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
       autoLoadEntities: true,
-      logging: true,
+      logging: !this.isProduction(),
 
       entities: [__dirname + '**/*.entity{.ts,.js}'],
 
-      synchronize: true,
+      synchronize: !this.isProduction(),
     };
+  }
+
+  public getJwtSecret(): string {
+    return this.getValue('JWT_SECRET') as string;
+  }
+
+  public getJwtExpiresIn(): string {
+    return this.getValue('JWT_EXPIRES_IN', false) || '1d';
+  }
+
+  public getAdminUsername(): string {
+    return this.getValue('ADMIN_USERNAME') as string;
+  }
+
+  public getAdminPasswordHash(): string {
+    return this.getValue('ADMIN_PASSWORD_HASH') as string;
+  }
+
+  public getCorsOrigins(): string[] {
+    const origins = this.getValue('CORS_ORIGINS', false);
+    if (!origins) {
+      return ['http://localhost:3000', 'http://localhost:3001'];
+    }
+    return origins.split(',').map((origin) => origin.trim());
+  }
+
+  public getRateLimitTtl(): number {
+    const ttl = this.getValue('RATE_LIMIT_TTL', false);
+    return ttl ? parseInt(ttl) : 60000;
+  }
+
+  public getRateLimitMax(): number {
+    const max = this.getValue('RATE_LIMIT_MAX', false);
+    return max ? parseInt(max) : 100;
   }
 }
 

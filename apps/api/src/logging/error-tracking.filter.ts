@@ -40,9 +40,10 @@ export class ErrorTrackingFilter implements ExceptionFilter {
       if (typeof exceptionResponse === 'string') {
         message = exceptionResponse;
       } else if (typeof exceptionResponse === 'object') {
-        const responseObj = exceptionResponse as Record<string, any>;
-        message = responseObj.message || exception.message;
-        error = responseObj.error;
+        const responseObj = exceptionResponse as Record<string, unknown>;
+        message =
+          (responseObj.message as string | string[]) || exception.message;
+        error = responseObj.error as string | undefined;
       } else {
         message = exception.message;
       }

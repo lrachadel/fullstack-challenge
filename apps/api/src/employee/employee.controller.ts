@@ -11,12 +11,19 @@ import {
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 @ApiTags('Employees')
+@ApiBearerAuth('JWT-auth')
 @Controller('employee')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
@@ -33,6 +40,7 @@ export class EmployeeController {
   @Get()
   @ApiOperation({ summary: 'Get all employees' })
   @ApiResponse({ status: 200, description: 'List of all employees' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   findAll() {
     return this.employeeService.findAll();
   }
@@ -40,6 +48,7 @@ export class EmployeeController {
   @Get('count')
   @ApiOperation({ summary: 'Get total employee count' })
   @ApiResponse({ status: 200, description: 'Total number of employees' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   count() {
     return this.employeeService.count();
   }
@@ -73,7 +82,10 @@ export class EmployeeController {
   @Delete('delete-employee/:id')
   @ApiOperation({ summary: 'Deactivate an employee (soft delete)' })
   @ApiParam({ name: 'id', type: 'number', description: 'Employee ID' })
-  @ApiResponse({ status: 200, description: 'Employee deactivated successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'Employee deactivated successfully',
+  })
   @ApiResponse({ status: 404, description: 'Employee not found' })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.employeeService.remove(id);
