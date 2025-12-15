@@ -83,6 +83,30 @@ pnpm dev --filter=api   # Apenas API (porta 3002)
 pnpm dev --filter=web   # Apenas Web (porta 3000)
 ```
 
+#### 🐳 Docker (Alternativa)
+
+```bash
+# Configure as variáveis de ambiente
+cp .env.example .env
+# Edite o arquivo .env com suas configurações
+
+# Inicie todos os serviços (PostgreSQL, API, Web)
+docker-compose up -d
+
+# Visualize os logs
+docker-compose logs -f
+
+# Pare os serviços
+docker-compose down
+```
+
+**Serviços Docker:**
+| Serviço | URL | Descrição |
+|---------|-----|-----------|
+| **web** | http://localhost:3000 | Frontend Next.js |
+| **api** | http://localhost:3002 | Backend NestJS |
+| **postgres** | localhost:5432 | Banco de dados |
+
 #### Variáveis de Ambiente (API)
 
 ```env
@@ -275,6 +299,30 @@ pnpm dev
 pnpm dev --filter=api   # API only (port 3002)
 pnpm dev --filter=web   # Web only (port 3000)
 ```
+
+#### 🐳 Docker (Alternative)
+
+```bash
+# Configure environment variables
+cp .env.example .env
+# Edit the .env file with your settings
+
+# Start all services (PostgreSQL, API, Web)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+**Docker Services:**
+| Service | URL | Description |
+|---------|-----|-------------|
+| **web** | http://localhost:3000 | Next.js Frontend |
+| **api** | http://localhost:3002 | NestJS Backend |
+| **postgres** | localhost:5432 | Database |
 
 #### Environment Variables (API)
 
