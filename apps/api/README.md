@@ -12,8 +12,8 @@ API RESTful para o Portal de Funcionários da Johnson & Johnson. Desenvolvida co
 
 ### 🔗 URL de Produção
 
-- **API:** [https://jj-employee-api.railway.app](https://jj-employee-api.railway.app)
-- **Swagger:** [https://jj-employee-api.railway.app/api/docs](https://jj-employee-api.railway.app/api/docs)
+- **API:** [https://fullstack-challenge-api.onrender.com](https://fullstack-challenge-api.onrender.com)
+- **Swagger:** [https://fullstack-challenge-api.onrender.com/api/docs](https://fullstack-challenge-api.onrender.com/api/docs)
 
 ### 🏗️ Arquitetura
 
@@ -182,8 +182,8 @@ RESTful API for the Johnson & Johnson Employee Portal. Built with NestJS, TypeOR
 
 ### 🔗 Production URL
 
-- **API:** [https://jj-employee-api.railway.app](https://jj-employee-api.railway.app)
-- **Swagger:** [https://jj-employee-api.railway.app/api/docs](https://jj-employee-api.railway.app/api/docs)
+- **API:** [https://fullstack-challenge-api.onrender.com](https://fullstack-challenge-api.onrender.com)
+- **Swagger:** [https://fullstack-challenge-api.onrender.com/api/docs](https://fullstack-challenge-api.onrender.com/api/docs)
 
 ### 🏗️ Architecture
 

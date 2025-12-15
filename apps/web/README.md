@@ -12,7 +12,7 @@ Frontend do Portal de Funcionários da Johnson & Johnson. Desenvolvido com Next.
 
 ### 🔗 URL de Produção
 
-- **Aplicação:** [https://jj-employee-portal.netlify.app](https://jj-employee-portal.netlify.app)
+- **Aplicação:** [https://employee-portal-ruby-eight.vercel.app](https://employee-portal-ruby-eight.vercel.app)
 
 ### 🏗️ Arquitetura
 
@@ -158,7 +158,7 @@ Frontend for the Johnson & Johnson Employee Portal. Built with Next.js 16, React
 
 ### 🔗 Production URL
 
-- **Application:** [https://jj-employee-portal.netlify.app](https://jj-employee-portal.netlify.app)
+- **Application:** [https://employee-portal-ruby-eight.vercel.app](https://employee-portal-ruby-eight.vercel.app)
 
 ### 🏗️ Architecture
 
