@@ -12,9 +12,9 @@ Portal de gestão de funcionários da Johnson & Johnson, desenvolvido como parte
 
 ### 🔗 Aplicação Deployada
 
-- **Frontend (Web):** [https://jj-employee-portal.netlify.app](https://jj-employee-portal.netlify.app)
-- **API (Backend):** [https://jj-employee-api.railway.app](https://jj-employee-api.railway.app)
-- **Documentação da API (Swagger):** [https://jj-employee-api.railway.app/api/docs](https://jj-employee-api.railway.app/api/docs)
+- **Frontend (Web):** [https://employee-portal-ruby-eight.vercel.app](https://employee-portal-ruby-eight.vercel.app)
+- **API (Backend):** [https://fullstack-challenge-api.onrender.com](https://fullstack-challenge-api.onrender.com)
+- **Documentação da API (Swagger):** [https://fullstack-challenge-api.onrender.com/api/docs](https://fullstack-challenge-api.onrender.com/api/docs)
 
 ### 🔐 Credenciais de Acesso
 
@@ -229,9 +229,9 @@ Johnson & Johnson Employee Management Portal, developed as part of a fullstack c
 
 ### 🔗 Deployed Application
 
-- **Frontend (Web):** [https://jj-employee-portal.netlify.app](https://jj-employee-portal.netlify.app)
-- **API (Backend):** [https://jj-employee-api.railway.app](https://jj-employee-api.railway.app)
-- **API Documentation (Swagger):** [https://jj-employee-api.railway.app/api/docs](https://jj-employee-api.railway.app/api/docs)
+- **Frontend (Web):** [https://employee-portal-ruby-eight.vercel.app](https://employee-portal-ruby-eight.vercel.app)
+- **API (Backend):** [https://fullstack-challenge-api.onrender.com](https://fullstack-challenge-api.onrender.com)
+- **API Documentation (Swagger):** [https://fullstack-challenge-api.onrender.com/api/docs](https://fullstack-challenge-api.onrender.com/api/docs)
 
 ### 🔐 Access Credentials
 
