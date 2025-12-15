@@ -21,11 +21,7 @@ import { EventController } from './event.controller';
     TypeOrmModule.forFeature([EventLog]),
   ],
   controllers: [EventController],
-  providers: [
-    EventEmitterService,
-    EventLogService,
-    EventListener,
-  ],
+  providers: [EventEmitterService, EventLogService, EventListener],
   exports: [EventEmitterService, EventLogService],
 })
 export class EventsModule {}

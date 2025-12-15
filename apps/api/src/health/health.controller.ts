@@ -7,8 +7,10 @@ import {
   MemoryHealthIndicator,
   DiskHealthIndicator,
 } from '@nestjs/terminus';
+import { Public } from '../auth/decorators/public.decorator';
 
 @ApiTags('Health')
+@Public()
 @Controller('health')
 export class HealthController {
   constructor(
@@ -43,12 +45,13 @@ export class HealthController {
 
   @Get('ready')
   @HealthCheck()
-  @ApiOperation({ summary: 'Readiness probe - check if application is ready to receive traffic' })
+  @ApiOperation({
+    summary:
+      'Readiness probe - check if application is ready to receive traffic',
+  })
   @ApiResponse({ status: 200, description: 'Application is ready' })
   @ApiResponse({ status: 503, description: 'Application is not ready' })
   readiness() {
-    return this.health.check([
-      () => this.db.pingCheck('database'),
-    ]);
+    return this.health.check([() => this.db.pingCheck('database')]);
   }
 }

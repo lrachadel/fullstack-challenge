@@ -21,7 +21,10 @@ export class EmployeeService {
       throw new BadRequestException('O nome é obrigatório');
     }
 
-    if (!createEmployeeDto.hireDate || createEmployeeDto.hireDate.trim() === '') {
+    if (
+      !createEmployeeDto.hireDate ||
+      createEmployeeDto.hireDate.trim() === ''
+    ) {
       throw new BadRequestException('A data de contratação é obrigatória');
     }
 
@@ -51,15 +54,16 @@ export class EmployeeService {
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
     const existingEmployee = await this.repo.findOneBy({ id });
-    
+
     if (!existingEmployee) {
       throw new BadRequestException('Funcionário não encontrado');
     }
 
-    const changes: Record<string, { old: any; new: any }> = {};
+    const changes: Record<string, { old: unknown; new: unknown }> = {};
     for (const [key, value] of Object.entries(updateEmployeeDto)) {
-      if (existingEmployee[key] !== value) {
-        changes[key] = { old: existingEmployee[key], new: value };
+      const existingValue = existingEmployee[key as keyof Employee];
+      if (existingValue !== value) {
+        changes[key] = { old: existingValue, new: value };
       }
     }
 
@@ -79,7 +83,7 @@ export class EmployeeService {
 
   async remove(id: number) {
     const employee = await this.repo.findOneBy({ id });
-    
+
     if (!employee) {
       throw new BadRequestException('Funcionário não encontrado');
     }
@@ -108,7 +112,22 @@ export class EmployeeService {
         '../../assets/org-chart-people-100.json',
       );
       const jsonData = fs.readFileSync(jsonPath, 'utf-8');
-      const employees = JSON.parse(jsonData);
+
+      interface SeedEmployee {
+        id: number;
+        name: string;
+        jobTitle: string;
+        department: string;
+        managerId: number | null;
+        photoPath: string;
+        type: string;
+        status: string;
+        workEmail: string;
+        hireDate: string;
+        location: string;
+      }
+
+      const employees = JSON.parse(jsonData) as SeedEmployee[];
 
       for (const emp of employees) {
         const employee = this.repo.create({

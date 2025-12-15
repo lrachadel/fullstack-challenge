@@ -8,9 +8,7 @@ import { EventLogService } from './event-log.service';
 export class EventListener {
   private readonly logger = new Logger(EventListener.name);
 
-  constructor(
-    private readonly eventLogService: EventLogService,
-  ) {}
+  constructor(private readonly eventLogService: EventLogService) {}
 
   @OnEvent(EventType.EMPLOYEE_CREATED)
   async handleEmployeeCreated(event: EmployeeEvent) {
