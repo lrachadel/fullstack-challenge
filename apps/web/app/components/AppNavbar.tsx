@@ -7,6 +7,8 @@ import { useLanguage } from '../i18n';
 import { useAuth } from '../auth';
 import styles from './AppNavbar.module.css';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002';
+
 export default function AppNavbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -27,7 +29,7 @@ export default function AppNavbar() {
   ];
 
   const handleOpenSwagger = () => {
-    window.open('http://localhost:3002/api/docs', '_blank');
+    window.open(`${API_BASE_URL}api/docs`, '_blank');
   };
 
   const handleLogout = () => {
