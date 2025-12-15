@@ -130,20 +130,24 @@ export class EmployeeService {
       const employees = JSON.parse(jsonData) as SeedEmployee[];
 
       for (const emp of employees) {
-        const employee = this.repo.create({
-          id: emp.id,
-          name: emp.name,
-          jobTitle: emp.jobTitle,
-          department: emp.department,
-          managerId: emp.managerId,
-          photoPath: emp.photoPath,
-          type: emp.type,
-          status: emp.status,
-          workEmail: emp.workEmail,
-          hireDate: emp.hireDate,
-          location: emp.location,
-        });
-        await this.repo.save(employee);
+        await this.repo
+          .createQueryBuilder()
+          .insert()
+          .into(Employee)
+          .values({
+            id: emp.id,
+            name: emp.name,
+            jobTitle: emp.jobTitle,
+            department: emp.department,
+            managerId: emp.managerId,
+            photoPath: emp.photoPath,
+            type: emp.type as 'Employee' | 'Partner',
+            status: emp.status as 'Active' | 'Inactive',
+            workEmail: emp.workEmail,
+            hireDate: emp.hireDate,
+            location: emp.location,
+          })
+          .execute();
       }
       return { message: `Seeded ${employees.length} employees` };
     }
