@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Employee } from '../types/employee';
 import { useLanguage } from '../i18n';
+import { useAuth } from '../auth';
 import { employeeService } from '../services/employeeService';
 import EmployeePhoto from './EmployeePhoto';
 import ConfirmModal from './ConfirmModal';
@@ -18,8 +20,11 @@ interface EmployeeDetailModalProps {
 
 export default function EmployeeDetailModal({ employee, employees, onClose, onEdit, onDeactivate }: EmployeeDetailModalProps) {
   const { t, language } = useLanguage();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
   const [isDeactivating, setIsDeactivating] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDeactivateClick = () => {
     setShowConfirmModal(true);
@@ -30,15 +35,22 @@ export default function EmployeeDetailModal({ employee, employees, onClose, onEd
     
     try {
       setIsDeactivating(true);
+      setError(null);
       await employeeService.remove(employee.id);
       setShowConfirmModal(false);
       if (onDeactivate) {
         onDeactivate();
       }
       onClose();
-    } catch (error) {
-      console.error('Erro ao desativar funcionário:', error);
-      setShowConfirmModal(false);
+    } catch (err) {
+      if (err instanceof Error && err.message === 'UNAUTHORIZED') {
+        setError(t.auth.notAuthenticated);
+        setShowConfirmModal(false);
+        setTimeout(() => router.push('/login'), 1500);
+      } else {
+        console.error('Erro ao desativar funcionário:', err);
+        setShowConfirmModal(false);
+      }
     } finally {
       setIsDeactivating(false);
     }
@@ -79,6 +91,9 @@ export default function EmployeeDetailModal({ employee, employees, onClose, onEd
         </div>
 
         <div className={styles.content}>
+          {error && (
+            <div className={styles.error}>{error}</div>
+          )}
           <div className={styles.actionButtons}>
             {onEdit && (
               <button 

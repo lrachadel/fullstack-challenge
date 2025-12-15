@@ -29,12 +29,57 @@
   flex-shrink: 0;
 }
 
+.authSection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.username {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.authButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.authButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.authButton svg {
+  flex-shrink: 0;
+}
+
 @media (max-width: 640px) {
   .apiDocsButton span {
     display: none;
   }
   
   .apiDocsButton {
+    padding: 6px 8px;
+  }
+
+  .username {
+    display: none;
+  }
+
+  .authButton {
     padding: 6px 8px;
   }
 }

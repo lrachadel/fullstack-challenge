@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Employee } from '../types/employee';
 import { useLanguage } from '../i18n';
+import { useAuth } from '../auth';
 import { employeeService } from '../services/employeeService';
 import styles from './EmployeeFormModal.module.css';
 
@@ -46,6 +48,8 @@ export default function EmployeeFormModal({
   onSave 
 }: EmployeeFormModalProps) {
   const { t } = useLanguage();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
   const [formData, setFormData] = useState<EmployeeFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -117,7 +121,12 @@ export default function EmployeeFormModal({
       onSave();
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : t.employeeForm.errorSaving);
+      if (err instanceof Error && err.message === 'UNAUTHORIZED') {
+        setError(t.auth.notAuthenticated);
+        setTimeout(() => router.push('/login'), 1500);
+      } else {
+        setError(err instanceof Error ? err.message : t.employeeForm.errorSaving);
+      }
     } finally {
       setIsSubmitting(false);
     }
