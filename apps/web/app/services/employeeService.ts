@@ -1,6 +1,6 @@
 import { Employee } from '../types/employee';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002/';
 
 function getAuthToken(): string | null {
   if (typeof window === 'undefined') return null;
@@ -20,7 +20,7 @@ function getAuthHeaders(): HeadersInit {
 
 export const employeeService = {
   async findAll(): Promise<Employee[]> {
-    const res = await fetch(`${API_BASE_URL}/employee`, {
+    const res = await fetch(`${API_BASE_URL}employee`, {
       cache: 'no-store',
       headers: getAuthHeaders(),
     });
@@ -34,7 +34,7 @@ export const employeeService = {
   },
 
   async findOne(id: number): Promise<Employee> {
-    const res = await fetch(`${API_BASE_URL}/employee/${id}`, {
+    const res = await fetch(`${API_BASE_URL}employee/${id}`, {
       cache: 'no-store',
       headers: getAuthHeaders(),
     });
@@ -48,7 +48,7 @@ export const employeeService = {
   },
 
   async create(employee: Omit<Employee, 'id' | 'status'>): Promise<Employee> {
-    const res = await fetch(`${API_BASE_URL}/employee/create-employee`, {
+    const res = await fetch(`${API_BASE_URL}employee/create-employee`, {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify(employee),
@@ -63,7 +63,7 @@ export const employeeService = {
   },
 
   async update(id: number, employee: Partial<Omit<Employee, 'hireDate' | 'type' | 'status'>>): Promise<Employee> {
-    const res = await fetch(`${API_BASE_URL}/employee/update-employee/${id}`, {
+    const res = await fetch(`${API_BASE_URL}employee/update-employee/${id}`, {
       method: 'PATCH',
       headers: getAuthHeaders(),
       body: JSON.stringify(employee),
@@ -78,7 +78,7 @@ export const employeeService = {
   },
 
   async remove(id: number): Promise<void> {
-    const res = await fetch(`${API_BASE_URL}/employee/delete-employee/${id}`, {
+    const res = await fetch(`${API_BASE_URL}employee/delete-employee/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
