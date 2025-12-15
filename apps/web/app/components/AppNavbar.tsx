@@ -29,7 +29,7 @@ export default function AppNavbar() {
   ];
 
   const handleOpenSwagger = () => {
-    window.open(`${API_BASE_URL}api/docs`, '_blank');
+    window.open(`${API_BASE_URL}/api/docs`, '_blank');
   };
 
   const handleLogout = () => {
